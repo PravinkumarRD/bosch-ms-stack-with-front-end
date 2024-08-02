@@ -1,0 +1,84 @@
+What is REST/RESTFul API?
+	Representational State Transfer - Architectural Style Pattern/Development - 
+	In Microsoft - Web API - M-Model and C-Controller Pattern
+
+SOA - Service Oriented Architecture
+	Web Services - 
+		SOAP - Simple Object Access Protocol
+			Xml + HTTP
+		WSDL - Web Service Description Language [Xml]
+		WSE - Web Service Enhancements
+
+Windows Communication Foundation Service [2007]
+	IPC, TCP/IP, Http, Https, P2P, Federal [Govt/Military/...] 
+		Hard to configure which follows Microsoft .NET framework specifications
+
+Why RESTFull services?
+
+	1) It should be stateless 
+	2) It should access all the resources from the server using only URI
+		Example - https://api.bosch.ev/doors/designs
+	3) It should not have built-in encryption 
+	4) It should not have session
+	5) It should use one and only one Protocol - Http
+	6) It should perform CRUD operations using Http verbs - GET/POST/PUT/DELETE/PATCH/MERGE/...
+	7) It should return results only in JSON/XML/ATOM/OData etc formats [unlike UI]
+
+Web API Development
+
+	In-House/Client or Partners/Public
+
+Create First ASP.NET Core Web API 8 application
+
+https://localhost:7001/api/customers - [GET - Fetch list of customers] [Get() - Method]
+https://localhost:7001/api/customers/2378 [GET - Fetch customer details] [Get(int id) - Method]
+https://localhost:7001/api/customers - [POST - Create/Insert new customer] [Post(Customer customer)]
+https://localhost:7001/api/customers - [PUT - Update existing customer] [Put(Customer customer)]
+https://localhost:7001/api/customers/2378 [DELETE - Remove the customer] [Delete(int id) - Method]
+
+Decorate every method using Http Attributes
+
+[HttpGet]
+[HttpPost]
+[HttpPut]
+[HttpDelete]
+
+Controller Class - Base class for API controller is ControllerBase
+	[Route("api/Customers")]
+	[ApiController]
+
+
+PoC  Events Management Service/API
+
+Entities - 
+	Employee
+	Event
+	User
+
+RDBMS SQL Queries - 
+
+DDL - Data Definition Language [Create/Alter/Drop/Truncate]
+DML - Data Manipulation Language [Insert/Update/Delete]
+DQL - Data Query Language [Select]
+
+CQRS Pattern along with Mediator Pattern [MediatR Package]
+
+What is CQRS?
+	Command Query Responsibility Segregation Pattern
+	Command - DML [Insert/Update/Delete]
+	Query - DQL [Select]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
