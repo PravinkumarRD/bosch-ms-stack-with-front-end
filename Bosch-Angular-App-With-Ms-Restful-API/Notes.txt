@@ -1,0 +1,1 @@
+Please Extract the folder contents and then open the folder in VS Code and install all the dependencies using npm install command by opening VS code terminal
