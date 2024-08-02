@@ -1,0 +1,300 @@
+ASP.NET Core MVC Application [4-Days]
+		Designing [Styling] - Bootstrap CSS Framework 
+		O/RM for Data Access Layer [Entity Framework Core]
+		Authentication and Authorization
+		Security Trimming
+		Layered Architecture
+		DTOs and AutoMapper
+		Repository Pattern, IoC and Dependency Injection
+
+ECommerce Application - Shoes
+	1) See the different products and their details
+	2) Cart Management [Add/Remove Products or update quantity of the product]
+	3) Security - Authentication and Authorization [Identity Framework/OAuth]
+	
+What is MVC?
+	Model-View-Controller Architectural Pattern
+
+	Model/Entities - It contains the business rules [Contains Data]/Domain Entities
+	View - User Interface [Display/Interaction]
+	Controller - [Takes a request and generate a response - Takes the data from the model and pass it to the view. After view has been processed, sends the output to the client]
+
+Why ASP.NET Core MVC 8? [Used for developing - Web Applications/Websites/APIs/...]
+
+1) Loose Coupling
+2) Easy Testing
+3) Conditional Rendering of the views
+4) Control over the markup [HTML tags]
+5) Familiarity with Patterns [MVC/MVVM (At a basic level)] 
+6) IoC and D.I. out of the box
+7) Application configuration using JSON
+8) Complete application lifecycle configuration using Middleware(s)
+	Middleware - is a function. All middleware functions are configured with the method starting with use
+		UseAuthorization(), UseAuthentication(), UseSession(),...
+9) Separation of Concern
+
+
+ASP.NET - .NET 8 - 
+	1) ASP.NET Razor application
+	2) ASP.NET MVC application
+	3) ASP.NET Web API application 
+
+Web Application is a collection of resources [Webpage, static assets, data, configuration]
+
+URL/Route - Each resource is identified uniquely using Route
+
+What is controller?
+	1) Controller is a class. It contains methods. These methods are called as action methods
+What is action method?
+	1) It is an ultimate destination of your request where the response will be generated
+
+What is an area?
+	Area represents a feature of your application [Feature-Wise-Folder-Structure]
+
+
+How Routes are defined in .NET Core MVC App?
+
+	https://localhost:44377/Controller/ActionMethod/Parameters [Optional]
+	https://localhost:44377/Area/Controller/ActionMethod/Parameters [Optional]
+
+	For the default route, .NET MVC application has pre-configured default controller and default action in that controller
+
+	Controller=Home and Default Action Method - Index
+
+	https://localhost:44377 [Default]
+	https://localhost:44377/Home 
+	https://localhost:44377/Home/About
+	https://localhost:44377/Employees
+	https://localhost:44377/Employees/Details/1001 [Parameterized Route to Details ActionMethod]
+
+ASP.NET Applications are hosted on Kestrel Web server
+
+All the routes will be ready as soon as you start the application with the required services from service container which you may want to use during the application and request lifecycle execution
+
+All View files extension is .cshtml [HTML-Display + C#-Fetch Data =>Processed on Server Side => HTML]
+Razor Engine - 
+	1) Razor Syntax - It will start with @
+	2) Html Helper Methods - 
+	3) Html Helper Attributes
+
+How does controller [Action Method] work?
+1) Controller can work alone [Without Model and View]
+	Send Files/Plain Text response to the client
+2) Controller can work only with Model
+	Send the data as JSON to the client
+3) Controller can work only with View
+	Send static response to the client
+4) Controller will work with both - Model as well as View [Dynamic web pages]
+
+Different Results returned by Action Method - 
+	1) Content() 
+	2) File()
+	3) View()
+	4) Json()
+	5) PartialView()
+
+Communication between controller and view - Sending data along with model to the view
+	1) ViewBag - Is a dynamic object. It is not available to next request
+	2) ViewData - Dictionary Object[Key=value] It is not available to next request
+	3) TempData - Dictionary Object[Key=value] It is available to next request
+	4) VM -ViewModel
+
+How do you redirect the request to another action method?
+
+Request to access action method named One should get redirected action method Two
+
+eCommerce Application Structure - Feature-wise Folder Structure - in MVC Application
+
+	Application/Project - 
+		Areas
+			Categories
+				Controllers
+					HomeController
+				Views
+				Models
+			Products
+				Controllers
+					HomeController
+				Views
+				Models
+			Customers
+				Controllers
+					HomeController
+				Views
+				Models
+			Carts
+				Controllers
+					HomeController
+				Views
+				Models
+			Invoices
+				Controllers
+					HomeController
+				Views
+				Models
+			Security
+				Controllers
+					HomeController
+				Views
+				Models
+		
+		wwwroot - static assets
+		Controllers - For controllers
+			HomeController
+		Views - Views of controllers
+			Home
+				Index.cshtml
+				Privacy.cshtml
+		Models - Models
+			...
+
+RDBMS - 
+	R-Relation - Table
+	C-Attribute
+	R-Tuple
+
+Introduction to Entity Framework Core [EF Core]
+	ORM - Object Relation Mapper
+
+	Object - Plain Old CLR Object [POCO]
+
+Associations -
+	1) One-To-One
+	2) One-To-Many
+	3) Many-To-Many
+
+Approaches -  
+
+1) Database/Db First Modeling
+	You will have your database ready
+	From the database Tables/Views/SPs, EF Core will generate objects along with relationships/Associations 
+	EF Core will provider the mapper between objects and tables
+	
+2) Code First Modeling
+	When you develop the application from scratch where database does not exist, Use Code first Approach
+	You will create new database and its objects from the entities
+
+	You will have to work with Migration Commands
+		To Create, Update, Remove the changes from the database
+
+	1) Microsoft.EntityFrameworkCore.SqlServer - Provider of SQL Server for EF Core
+	2) Microsoft.EntityFrameworkCore.tools - Gives use migration commands
+
+Example of Connection String - 
+	Data Source=localhost;Initial Catalog=BoschEComJuly24Db;Trusted_Connection=true;TrustServerCertificate=True;
+
+Configure Connection String - 
+	Data Source=localhost
+	Initial Catalog=BoschEComJuly24Db
+	Trusted_Connection=true 
+	TrustServerCertificate=True
+
+	User Id=sa
+	Password=Whatever
+
+
+In order to create new database and convert DbSets into Database tables, let's use migration commands
+
+In order to run migration commands, you will use Package Manager Console window
+	Tools Menu=>Nuget Package Manager => Package Manager Console
+
+Add-Migration -name InitialMigration
+Update-Database
+
+Designing Asynchronous Repository - For EF Core
+
+	Number of Synchronous and Asynchronous methods
+
+
+Product Model => View
+
+DTO - Data Transfer Object
+
+Product => ProductDto => View
+
+15 Properties => 4 Properties
+
+Controller-To-View [Display-GET Requests]
+View-To-Controller [Submit - POST/PUT/DELETE Requests]
+
+
+Http Protocol is Stateless - It does not preserve the request. Once the request and response lifecycle is completed, the data will be lost
+
+
+State Management in ASP.NET Core MVC [Data - Non Secured and Secured]
+
+Non-Secured [Client/Browser]					Secured
+	Query String							Session
+	Cookie [Transient/Persistent]									SessionId
+	Web Storage
+		Session
+		Local
+	data-* attributes [jQuery]
+
+Session Id is sent in your first response in form of cookie at your client side and this cookie is transient cookie
+
+Working with Stored Procedures in EF Core Code First Approach - 
+	1) Add blank/empty migration in Data Access Layer project
+		Add-Migration -Name CartStoredProcedures [Run this command in Package Manager Console]
+
+	2) Write raw SQL code in up and down methods of migration class
+
+	3) Update-Database
+
+
+
+Security - 
+	Authentication - Check/Validate the identity of the user
+		1) User Id and Password
+		2) Biometrics
+		3) Social Media [OAuth Protocol - Google, Facebook, Microsoft, ...100+]
+		4) 2F/MF Authentication
+		...
+
+	Authorization - Grant/Revoke the permissions from the Roles/Users of an application
+
+	Security Trimming - Add/Remove the contents from the webpages based on user's credentials or roles
+
+To implement the Authentication process in ASP.NET Core MVC applications, we can make use of - 
+	Identity Framework
+
+
+Filters in ASP.NET Core
+	Executing the logic before and after - 
+		1) Action methods are executed
+		2) Controller
+		3) Global Filter [Application-Level filter]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
