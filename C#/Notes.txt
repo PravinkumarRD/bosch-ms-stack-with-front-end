@@ -1,0 +1,544 @@
+Agenda - 
+
+Day - 1 Basics of framework along with Visual Studio Introduction
+Day - 2 Introduction to OOP in C#
+Day - 3 Assemblies, Collections/LINQ/File IO/Serialization
+Day - 4 Design Patterns and Multi-Threading
+
+Developing PoC - 
+
+	1) ASP.NET Core MVC Application [4-Days]
+		Designing [Styling] - Bootstrap CSS Framework 
+		O/RM for Data Access Layer [Entity Framework Core]
+		Authentication and Authorization
+		Security Trimming
+		Layered Architecture
+		DTOs and AutoMapper
+		Repository Pattern, IoC and Dependency Injection
+
+	2) ASP.NET Core Web API	
+		Working with Clean Architecture
+		O/RM for Data Access Layer [Entity Framework Core]
+		Authentication and Authorization
+		Security Trimming
+		DTOs and AutoMapper
+Microsoft .NET
+
+.NET Framework 2001 [1.0], 2003 [1.x], 2005 [2.0], 2006[3.0], 2010[4.0], ... [4.8]
+
+.NET Core [Cross Platform] [.NET Core 1.0][2.0][3.0][5.0][6.0][7.0][8.0]
+
+STS -  Standard Term Support  [Research and Development]
+
+LTS - Long Term Support [Production]
+
+Versions of .NET Core - https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core
+
+What is .NET? 
+	It's a framework [Collection of number of libraries]
+
+What's the difference between framework and library?
+
+Main/Core components of .NET
+
+1) CLR - Common Language Runtime
+2) FCL - Framework Class Library
+3) CTS - Common Type System
+4) CLS - Common Language Specification
+
+.NET Offers number of Languages - C#, VB.NET, ... [Strongly Typed Languages/Compiler]
+
+C# - has its compiler - CSC.exe [C# Compiler]
+VB.NET - has its compiler VBC.exe [Visual Basic Compiler]
+
+.NET Application Lifecycle - In General
+
+Common Intermediate Language [CIL] - 
+
+1) It is machine/processor independent
+2) Final Deployable Unit
+3) It is also called Assembly [.exe/.DLL - Dynamic Link Library(Reusable Code - Class Library)]
+
+What does CLR do?
+
+1) Memory Management
+2) IO Management
+3) Resource Management
+4) Thread Management
+5) Execute your application
+
+Type System - 
+1) Value Type
+2) Reference Type
+
+Garbage Collector will clean-up the memory from Managed Heap.
+
+	GC.Collect()
+
+Managed Objects are maintained by CLR
+Unmanaged Objects [CLR will not take care of these objects]
+	Network, Database connections, File pointers
+
+Implement one interface - IDisposable => Dispose() {Write Clean-up code of Unmanaged objects} and at the end of the usage, call the dispose method explicitly
+
+class Employee : IDisposable {
+	.... Using Unmanaged objects
+
+	public Dispose()
+	{	
+		//Clean-up code
+		GC.SuppressFinalize();
+	}
+}
+
+1) First Way -
+Employee obj=new Employee();
+...
+obj.Dispose();
+obj=null;
+
+2) Second Way - 
+
+	using(SqlConnection CN=new SqlConnection())
+	{
+		//Your logic
+		At the end it automatically gives a call to Dispose()
+	}
+
+
+
+Day - 1
+
+Assignments - 
+	1) How does GC work?
+	2) What is the use of IDisposable interface? Different ways to call Dispose method
+	3) Why should we suppress finalize call?
+	4) What is FCL/BCL?
+	
+
+Introduction to Visual Studio 2022
+
+1) Developing Solution
+	Number of projects [Desktop/Web/Mobile/Cloud/Office/...]
+2) Developing Project - [Web App]
+
+
+AOT-  Ahead-Of-Time Compilation
+
+
+C# is case sensitive language.
+C# does not follow implicit type casting [Requires explicit type casting]
+Every state in C# must be ended using ; operator
+
+
+1) Brush-up all the OOP concepts
+
+---------------Day - 2
+
+4 Major Pillar of OOP
+
+	1) Abstraction
+		
+	2) Encapsulation
+		Class as a Template [Properties/Methods/Events]
+			[Private, Protected, Public, Internal, Protected Internal]
+	3) Inheritance - [Reusability]
+		1) Generalization - To - Specialization
+		Different Types of Classes
+			Abstract Class, Concrete class, Sealed Classes, Partial Class, Anonymous Class, Static Class
+		Relationship - IS-A
+			For Ex - Customer IS-A Person/ PrimeCustomer IS-A Customer
+		Different Types - 
+			1) Single (2) Multiple [Not Supported] (3) Multi-Level (4) Hybrid (5) Hierarchical 
+
+		HAS-A Relationship - [O/RM - Object Relation Mapper]
+			1) Association
+			2) Composition
+			3) Aggregation 
+Association - Uses-A Relationship
+	Association is a Uses-A relationship where a class uses another class to perform some operation. One class provides services to another class
+	For Example - Employee class and EmployeeRepository class
+
+	class Employee{
+		...
+	}
+	class EmployeeRepository{
+		public List<Employee> GetAllEmployees(){
+
+		}
+		public int InsertEmployee(Employee employee){
+		
+		}
+	}
+
+Composition - Has-A Relationship
+	One class HAS-A reference to another class as an instance property. In this, child class cannot exist without parent class. Deleting parent class also deletes the child class.
+	For Example - Employee HAS-An Address [Address class can not exist if Employee class is not there]
+
+	class Address{
+		RoadNo
+		RoadName
+		Area
+		BuildNo
+		FlatNo
+	}
+
+	class Employee{
+		public Address PermanentAddress { get; set; }
+	}
+
+Aggregation - Another category of HAS-A Relationship
+	One class HAS-A reference to another class as an instance property. However, both classes can exist independently.
+	For Example - Employee HAS-A Department [Here, department can exist independently]
+
+	Relationships Between Entities - 
+		1) One-To-One
+		2) One-To-Many
+		3) Many-To-Many
+
+
+		
+	4) Polymorphism
+		1) Overloading, Compile Time, Static, Early Binding
+			Same Method name, Number of parameter must be different or the types of parameter must be different. [Return Type is never considered]
+		2) Overriding, Runtime, Dynamic, Late Binding
+
+	class BasicMath {
+		int addition(int i)
+		int addition(int i, int j)
+		double addition(double i, double j)
+		//string addition(double i, double j) This will not work
+		public virtual int GstPercent(){
+			return 0;
+		}
+	}
+	//Overloading into derived class is possible
+	class AdvanceMath : BasicMath{
+		double addition(double i, double j, double k)
+
+		public override int GstPercent(){
+			return 18;
+		}
+	}
+
+	BaiscMath obj1=new BasicMath();
+	Console.WriteLine(obj1.GstPercent()); //Output of this method - 0
+
+	AdvanceMath obj2=new AdvanceMath();
+	Console.WriteLine(obj2.GstPercent()); //Output of this method - 18
+
+	BaiscMath obj3=new AdvanceMath();
+	Console.WriteLine(obj3.GstPercent()); //Output of this method - 18
+		
+
+What is an Object?
+	Attributes [Properties], Behaviour [Functions/Methods], Actions [Events]
+
+Using of classes - 
+	1) Create new instance
+	2) Extending the functionality of a class
+
+	3) Using class functionalities by ClassName.Property/Function [Static]
+
+class Person{
+
+	private int SocialId {get; set;}
+	public int Age {get; set;}
+	protected int AccountNo {get; set;}
+}
+
+Person p1=new Person();
+p1.
+
+Private - Within the class
+Protected - Only to the derived classes
+Public - Everywhere
+
+
+Interfaces/Contracts - [SOA - Service Oriented Architecture - Web Services/WCF - Windows Communication Foundation Service]
+
+interface IPhysics{
+	string Physics();
+}
+interface IBiology{
+	string Biology();
+}
+interface IChemistry{
+	string Chemistry();
+}
+
+interface IScienceHead : IChemistry, IBiology, IPhysics{
+
+}
+	
+class Science : IPhysics, IChemistry, IBiology {
+	string IPhysics.Physics(){
+		return "Physics Tag";
+	}
+	string IBiology.Biology(){
+		return "Biology Tag";
+	}
+	string IChemistry.Chemistry(){
+		return "Chemistry Tag";
+	}
+}
+
+IPhysics phyHod = new Science();
+IBiology bioHod = new Science();
+IChemistry chemHod = new Science();
+
+IScienceHead head=new Science();
+
+
+Constructor - 
+	To initialization of an object's data members
+	Overloading of constructor is possible
+
+	Different Types of Constructors - 
+		1) Default
+		2) Parameterized
+		3) Copy
+		4) Static
+
+
+When should we write get/set properties?
+1) When you want to do validations
+2) When you want your properties to be read only or write only
+
+Function Parameters - 
+	1) Input
+	2) Out
+	3) Ref
+	4) Params
+
+Assemblies - 
+	1) Working with class libraries [.dll]
+	2) How to use these class libraries in our applications
+
+Working with Data - 
+
+	1) In Memory
+		Array []
+			1D, 2D, Jagged Array
+		Collections - 
+			Non-Generic Collections - System.Collections [Name] [Weakly Typed Collection]
+				ArrayList, Stack, Queue, Hashtable
+			Generic Collections [Preferred] [ System.Collections.Generic]
+				[Strongly Typed Collection]
+				List<T>, Stack<T> [LIFO], Queue<T> [FIFO], Dictionary<TKey,TValue>
+
+	2) File System [System.IO]
+		File class with number of static methods [Create, Move, Check the existence, Delete, Copy, Read, Write,...]
+		DriveInfo
+		DirectoryInfo
+		FileInfo
+		StreamReader
+		StreamWriter
+		FileStream
+	3) Database
+
+Purchase Order System - 
+	[Categories, Products, Customers, Orders, OrderDetails, Invoices, Employees, Suppliers, Shippers ]
+
+Perform the CRUD operations for all the above tables using C# language
+CRUD [Insert/Select All/Select Single/Update/Delete]
+
+T-Type
+
+interface ICommonRepository<T>
+{
+	List<T> GetAll();
+	T GetDetails(int id)
+	int Insert(T item);
+	int Update(T item);
+	int Delete(T item);	
+}
+
+class CommonRepository<T> : ICommonRepository<T>{
+	public List<T> GetAll(){
+		//Database Logic
+	}
+	public T GetDetails(int id){
+		//Database Logic
+	}
+	public int Insert(T item){
+		//Database Logic
+	}
+	public int Update(T item){
+		//Database Logic
+	}
+	public int Delete(T item){
+		//Database Logic
+	}
+}
+
+ICommonRepository<Category> catCrud=new CommonRepository<Category>();
+catCrud.GetAll()  = List<Category>
+catCrud.GetDetails(10)  = Category
+
+ICommonRepository<Product> catCrud=new CommonRepository<Product>();
+
+
+Exception Handling - 
+
+	Specific To General Exception Handling
+
+
+Special Delegates - 
+
+	Predicate - Works on Boolean value
+	Func - Return value function
+	Action - Used for performing a task without expecting any value
+
+C# 3.0 - In year 2008 under .NET Framework 3.5
+
+Lambda Expressions - Replacement of anonymous methods
+
+LINQ Project - Language Integrated Query
+
+C# 4.0 - Year 2010 .NET Framework 4.0
+
+PLINQ - Parallel LINQ
+
+LINQ - 
+	1) OLINQ - LINQ-To-Object - System.Linq
+	2) XLINQ - LINQ-To-XML - System.Xml.Linq [XElement, XAttribute]
+	3) DLINQ - LINQ-To-DATA
+
+SELECT */Col1, Col2, Col3, Col1*Col3 FROM TABLE_NAME
+WHERE condition
+GROUP BY Col
+HAVINING
+ORDER BY clause;
+
+LINQ - 
+
+Collection return type must be [IEnumerable/IQuerable]
+
+
+1) Select * from Table_name [RDBMS]
+from variable_name in Collection 
+select variable_name;
+
+2) Select col1, col2, ... from Table_name [RDBMS]
+from variable_name in Collection 
+select new Class {Prop1=variable_name.Prop1, Prop2=variable_name.Prop2,}
+
+3) Select * from Table_name where condition [RDBMS]
+from variable_name in Collection 
+where variable_name.proptery==""
+select variable_name;
+
+4) Select Count, City from Table_name Group by City;
+
+var Result = from variable_name in Collection 
+group variable_name by variable_name.propertyName into GroupResultVariable
+select new {Count=GroupResultVariable.Count(), CustomerCity=GroupResultVariable.key}
+
+var x=10; //Local Variable Inference Type - The compiler will pickup an appropriate type from the type system and retain that type throughout the life of your program
+
+5) Select * from Table_name order by col1 [RDBMS]
+
+from variable_name in Collection 
+orderby variable_name.Prop1 descending 
+select variable_name;
+
+
+
+Software developers work with two types of operations - 
+
+	1) CPU Bound Operations [Synchronous Operations]
+		L1, L2, L3, RAM - Non-Blocking Operations
+	2) IO Bound Operations [Asynchronous Operations]
+		File System, Network [DB/API/...] [Blocking Operations]
+
+Threading - 
+	1) Native Thread [Operating System Threads]
+	2) Green Thread [Created by Virtual Machines/Runtimes]
+
+System.Threading - Gives you classes and delegates to work with threads [3.5]
+
+
+Every thread has its own execution stack [It has its own memory]
+
+Thread Synchronization - 
+	1) Lock
+	2) Monitor
+	3) Mutex
+	4) Semaphore 
+
+System.Threading.Tasks [TPL - Task Parallel Library] [4.0]
+
+Two Types of TASK  -  
+	Void and Return Type Task
+
+Void Tasks - Task class
+Return Value Tasks - Task<T>
+
+Chaining of Tasks
+
+async/await methods [4.5.1] 
+
+Design Patterns - 
+
+SOLID Principles
+
+SRP - Single Responsibility Principle
+
+OCP - Open Close Principle
+
+LSP - Liskvo Substitution Principle
+
+ISP - Interface Segregation Principle
+
+DIP - Dependency Inversion Principle
+
+Container - IoC [WhatsApp[DEV], Sms[Staging], Email[Prod], File[Testing]]
+
+
+
+class Order{
+	ILogger lg;
+	constructor(ILogger logger){
+		lg=logger;
+	}
+}
+
+Implement SOLID Principles in Purchase Order System [Use Class Library]
+
+Entities/Models/Classes - Person, Employee, Customer, Supplier, Shipper, Category, Product, Order, OrderDetail, Invoice
+
+	1) Customer will place an order for a product by choosing a category
+	2) Employee will process the order and generate the invoice
+	3) Supplier will supply the processed order
+
+	
+Category wise products - 
+	https://localhost:7110/Products/Home/CategoryWiseProducts/{CategoryId}
+
+Category - 
+Insert/Update/Delete [For These operations] - 
+
+By default, all action methods use GET Method
+
+You need to work with Two HTTP Verbs/Methods
+	GET/POST/PUT/DELETE
+
+In order to work with POST - You need to write two action methods
+
+	1) GET - This action method will render the data entry from on your browser
+	2) POST - To this action method, you will submit the form data which you will store in persistent storage [Database] 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
