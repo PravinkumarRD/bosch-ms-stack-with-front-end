@@ -1,0 +1,44 @@
+@if (events && events.length>0) {
+<div>
+    <h1 [innerText]="title"></h1>
+    <hr>
+    <h6 [innerText]="subTitle"></h6>
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Event Code</th>
+                <th>Event Name</th>
+                <th>Start Date</th>
+                <th>Fees</th>
+                <th>Show Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (event of events; track $index) {
+            <tr>
+                <td><span [innerText]="event.eventCode|lowercase"></span></td>
+                <td><span [innerText]="event.eventName|uppercase"></span></td>
+                <td><span [innerText]="event.startDate|dateGlobalization:'hi-IN'"></span></td>
+                <td><span [innerText]="event.fees|currency:'GBP'"></span></td>
+                <td>
+                    <!-- <button class="btn btn-info" (click)="onEventSelection(event.eventId)">Show Details</button> -->
+                     <a class="btn btn-info" [routerLink]="['/events', event.eventId]">Show Details</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    <!-- @if (selectedEventId>0) {
+    <hr>
+    @defer () {
+    <bosch-event-details [eventId]="selectedEventId"></bosch-event-details>
+    }@placeholder(minimum 3000ms) {
+    <h5>Loading...</h5>
+    }
+    } -->
+
+</div>
+}
+@else {
+<h4>There are no events scheduled! Please try after some time!</h4>
+}

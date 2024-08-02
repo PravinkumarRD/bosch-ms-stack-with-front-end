@@ -1,0 +1,41 @@
+<div class="container">
+    <h1>{{title}}</h1>
+    <hr>
+    <form (ngSubmit)="authenticateUser()" #loginForm="ngForm">
+        <fieldset>
+            <div class="form-group">
+                <label for="inputEmailId" class="form-label mt-4">User ID/Email</label>
+                <input type="email" class="form-control" id="inputEmailId" placeholder="Please enter your email Id"
+                    name="email" [(ngModel)]="user.email" required pattern="^[A-Za-z0-9+_.-]+@(.+)$" #email="ngModel">
+                <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
+                    <div *ngIf="email.errors?.['required']">
+                        Email Id is a required field!
+                    </div>
+                    <div *ngIf="email.errors?.['pattern']">
+                        Please enter valid Email ID! For Ex. john.mark&#64;bosch.com
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword" class="form-label mt-4">Password</label>
+                <input type="password" class="form-control" id="inputPassword" placeholder="Please enter your Password"
+                    name="password" [(ngModel)]="user.password" required minlength="4" #password="ngModel">
+                <div class="alert alert-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+                    <div *ngIf="password.errors?.['required']">
+                        Password is a required field!
+                    </div>
+                    <div *ngIf="password.errors?.['minlength']">
+                        Password can not be less than 4 characters!
+                    </div>
+                </div>
+            </div>
+            <button type="submit" [disabled]="!loginForm.valid" class="btn btn-success">Login</button>
+        </fieldset>
+    </form>
+    @if (errorMessage!="") {
+    <div class="alert alert-danger">
+        {{errorMessage}}
+    </div>
+    }
+
+</div>
